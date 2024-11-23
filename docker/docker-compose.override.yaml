@@ -1,0 +1,19 @@
+name: dify
+
+services:
+  api:
+    image: maxwang1993/dify-api:latest
+    networks:
+      - milvus
+
+  worker:
+    image: maxwang1993/dify-api:latest
+    networks:
+      - milvus
+
+  web:
+    image: maxwang1993/dify-web:latest
+
+  db:
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
