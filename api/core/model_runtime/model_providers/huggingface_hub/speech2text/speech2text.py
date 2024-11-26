@@ -1,14 +1,14 @@
-from typing import Optional, Union, IO
-from pathlib import Path
-import io
+from typing import IO, Optional
 
 from huggingface_hub import InferenceClient
+
 from core.model_runtime.entities.common_entities import I18nObject
 from core.model_runtime.entities.model_entities import AIModelEntity, FetchFrom, ModelType
+from core.model_runtime.errors.invoke import InvokeBadRequestError
 from core.model_runtime.errors.validate import CredentialsValidateFailedError
 from core.model_runtime.model_providers.__base.speech2text_model import Speech2TextModel
 from core.model_runtime.model_providers.huggingface_hub._common import _CommonHuggingfaceHub
-from core.model_runtime.errors.invoke import InvokeBadRequestError
+
 
 class HuggingfaceHubSpeech2TextModel(_CommonHuggingfaceHub, Speech2TextModel):
     def _invoke(self, model: str, credentials: dict, file: IO[bytes], user: Optional[str] = None) -> str:
@@ -34,12 +34,12 @@ class HuggingfaceHubSpeech2TextModel(_CommonHuggingfaceHub, Speech2TextModel):
 
             # Call the API using the InferenceClient
             result = client.automatic_speech_recognition(audio=audio_content, model=execute_model)
-            
+
             if isinstance(result, dict) and "text" in result:
                 return result["text"]
             elif isinstance(result, str):
                 return result
-            elif hasattr(result, 'text'):
+            elif hasattr(result, "text"):
                 return result.text
             else:
                 raise InvokeBadRequestError(f"Unexpected result format: {type(result)}")
