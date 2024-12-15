@@ -2,16 +2,19 @@ name: dify
 
 services:
   api:
+    platform: linux/amd64
     image: maxwang1993/dify-api:latest
     networks:
       - milvus
 
   worker:
+    platform: linux/amd64
     image: maxwang1993/dify-api:latest
     networks:
       - milvus
 
   web:
+    platform: linux/amd64
     image: maxwang1993/dify-web:latest
 
   db:
