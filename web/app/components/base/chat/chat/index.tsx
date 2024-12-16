@@ -214,7 +214,7 @@ const Chat: FC<ChatProps> = ({
           {chatNode}
           <div
             ref={chatContainerInnerRef}
-            className={cn('w-full', !noSpacing && 'px-8', chatContainerInnerClassName)}
+            className={cn('w-full', !noSpacing && chatContainerInnerClassName)}
           >
             {
               chatList.map((item, index) => {
